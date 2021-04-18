@@ -1,0 +1,117 @@
+{% extends 'base/base.html' %}
+
+<html lang="en">
+  <head>
+    {% block title %}
+    <title>{{article_detail_title}}</title>
+    {% endblock %}
+  </head>
+<body>
+{% block content %}   
+
+<main class="container">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <div class="border-bottom bottom-shadow mb-2">
+        <h1 class="fst-italic">
+          {{article.title}}
+        </h1>
+        <div class="text-muted">Published on:- {{article.published_at.date}}</div>
+        <a href="{% url 'article_update' article.id %}"><b>[Edit]</b></a>
+        <a href="{% url 'sub_article_create' article.id %}"><b>[Add]</b></a>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-8">
+          {% if article.short_description %}
+          <article class="mb-4">
+            {{article.short_description}}
+          </article>
+          {% endif %}
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-light p-2">
+            <h5>Contents</h5>
+            <ul>
+              {% for article in sub_articles %}
+                <li>{{article.sub_title}}</li>
+              {% endfor%}
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      {% for article in sub_articles %}
+      <div class="card border-0 pb-0" style="width:100%">
+        <div class="row">
+          {% if article.image %} 
+          <div class="col-md-3 mb-2 p-1 {% if forloop.counter|divisibleby:2 %}order-1{% else %}order-12{% endif %} text-center">
+            <div class="card bg-light shadow p-2" style="width: 100%;">
+              
+              <!-- Button trigger modal -->
+              <a type="button" role="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#exampleModal{{article.id}}">
+                <img src="{{article.image.url}}" class="img-thumbnail border-0" alt="image-{{article.id}}" style="width:100%, max-height:300px">
+              </a>
+                {% if article.image_description %}
+                <div class="card-body">
+                  <h6 class="card-text">{{article.image_description}}</h6>
+                </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal{{article.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header p-3">
+                      <h5 class="modal-title" id="exampleModalLabel">{{article.sub_title}}</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img src="{{article.image.url}}" class="img-thumbnail border-secondary" alt="image-{{article.id}}" style="width:100%, max-height:500px">
+                    </div>
+                    <div class="modal-footer-center">
+                      <h5 class="card-text mb-4 p-2">{{article.image_description}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          <div class="{% if article.image %}col-md-9{% else %}col{% endif %}">
+            <div class="card-body mb-0">
+              <h4 class="card-title border-bottom border-dark mb-2">{{article.sub_title}} <a href="{% url 'sub_article_update' article.id %}" style="text-decoration: none;"><small><small>[Edit]</small></small></a></h4>
+              <p class="card-text">{{ article.content|safe }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="bg-light p-2 mb-2">
+        <h5 class="reference-link border-bottom border-dark">Reference Link</h5>
+        {% for article in sub_articles %}
+        {% if article.external_link and article.title_to_external_link %}
+        <li><a href="{{article.external_link}}">{{article.title_to_external_link}}</a></li>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <div class="bg-light p-2 mb-5">
+        <h5 class="other references border-bottom border-dark">Other References</h5>
+        {% for article in sub_articles %}
+        {% if article.other_reference %}
+        <li>{{article.other_reference}}</li>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div><!-- /.row -->
+</main><!-- /.container -->
+
+<footer class="blog-footer">
+
+</footer>
+
+
+{% endblock %}    
+  </body>
+</html>

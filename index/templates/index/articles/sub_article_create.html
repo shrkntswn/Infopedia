@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+<html lang="en">
+  <head>
+    {% block title %}
+    <title>{{sub_article_create_title}}</title>
+    {% endblock %}
+  </head>
+<body>
+  {% block content %}
+  <div class="container">
+    <div class="col-md-8 offset-md-2 my-5">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+      <form action="" method="post" class="uniForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h6>{{form.sub_title|as_crispy_field}}</h6>
+        <h6>Content</h6>
+        {{form.media}}
+        {{form.content}}
+        <h6>Image</h6>
+        {{form.image}}
+        <h6>{{form.image_description|as_crispy_field}}</h6>
+        <div class="row my-1">
+          <div class="col-6">
+            <h6>{{form.external_link|as_crispy_field}}</h6>
+          </div>
+          <div class="col-6">
+            <h6>{{form.title_to_external_link|as_crispy_field}}</h6>
+          </div>
+        </div>
+        <h6>{{form.other_reference|as_crispy_field}}</h6>
+        <button role="button" type="submit" class="btn btn-primary my-2">Submit</button>
+      </form><hr>
+      <h1 class="text-center">Preview</h1>
+      <h2 class=" border-bottom mb-2"><a href="{% url 'article_detail' main_article.id main_article.slug %}" style="text-decoration: none;">{{main_article.title}}</a></h2>
+      <article class="mb-4">{{main_article.short_description}}</article>
+      {% for article in sub_articles %}
+      <div class="card border mb-2 p-2">
+        <div class="row g-0">
+          {% if article.image %}
+          <div class="col-md-4 {% if forloop.counter|divisibleby:2 %}order-1{% else %}order-12{% endif %} text-center">
+            <div class="card shadow p-2" style="width: 100%;">
+              <img src="{{article.image.url}}" class="img-thumbnail border-primary" alt="image-{{article.id}}" style="width:100%, max-height:300px">
+              {% if article.image_description %}
+              <div class="card-body">
+                <h6 class="card-text">{{article.image_description}}</h6>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          <div class="{% if article.image %}col-md-8{% else %}col{% endif %}">
+            <div class="card-body">
+              <h4 class="card-title">{{article.sub_title}} <a href="{% url 'sub_article_update' article.id %}" style="text-decoration: none;"><small><small>[Edit]</small></small></a></h4>
+              <p class="card-text">{{ article.content|safe }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </article>
+      {% endfor %}
+    </div> 
+  </div>
+  {% endblock %}
+</body>
+</html>

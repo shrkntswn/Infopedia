@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+<html lang="en">
+  <head>
+    {% block title %}
+    <title>{{category_title}}</title>
+    {% endblock %}
+  </head>
+  <body>
+{% block content %}   
+<main class="container">
+
+  <div class="row mb-2">
+    {% for article in articles %}
+    <div class="col-md-6">
+      <div class="row g-0 border border-2 border-primary rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <h2 class="mb-0">{{article.title}}</h2>
+          <div class="mb-1 text-muted">{{article.published_at.date}}</div>
+          <p class="card-text mb-auto">{{article.short_description}}</p>
+          <a href="{% url 'article_detail' article.id article.slug %}" class="stretched-link">Continue reading</a>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</main><!-- /.container -->
+
+<footer class="blog-footer">
+</footer>
+
+
+{% endblock %}    
+  </body>
+</html>

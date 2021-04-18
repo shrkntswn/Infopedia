@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+
+<html lang="en">
+  <head>
+    {% block title %}
+    <title>{{home_title}}</title>
+    {% endblock %}
+  </head>
+<body>
+{% block content %}   
+<main class="container my-5">
+  <div class="text-center mb-4">
+    <form class="col-md-4 offset-md-4" >
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search"><br>
+      <button class="btn btn-outline-secondary shadow" type="submit"><i class="bi bi-search"></i></button>
+    </form>
+    <div class="text-center my-3"><h2>Search</h2></div>
+  </div>
+
+  <!================================ FOR SEARCHED ARTICLES ===================================>
+  {% if query %}
+  <ul>
+    {% for article in articles %}
+    <li>
+      <div class="card border-0">
+        <h4><a href="{% url 'article_detail' article.id article.slug %}" class=""style="text-decoration:none">{{article.title}}</a></h4>
+        <p>{{article.short_description}}</p>
+      </div>
+    </li>
+    {% empty %}
+    <div class="text-center"><h4>No such results found. Please try with different keyword.</h4></div>
+  {% endfor %}
+  </ul>
+  {% endif %}
+
+  <!================================ FOR RELATED ARTICLES ===================================>
+  {% if related_articles %}
+  <hr>
+  <h2>Related articles</h2>
+  {% for related_article in related_articles %}
+  <div class="card border-0">
+    <h4><a href="{% url 'article_detail' related_article.id related_article.slug %}" class=""style="text-decoration:none">{{related_article.title}}</a></h4>
+    <p>{{related_article.short_description}}</p>
+  </div>
+  {% endfor %}
+  {% endif %}
+</main><!-- /.container -->
+
+<footer class="blog-footer">
+</footer>
+
+
+{% endblock %}    
+  </body>
+</html>

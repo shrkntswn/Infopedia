@@ -1,0 +1,67 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+<html lang="en">
+  <head>
+    {% block title %}
+    <title>{{sub_article_update_title}}</title>
+    {% endblock %}
+  </head>
+<body>
+  {% block content %}
+  <div class="container">
+    <div class="col-md-8 offset-md-2 my-5">
+      <div class="col-4 offset-4 bg-light p-2">
+        <h4 class="text-center">Roll Back ?</h4>
+        <form action="{% url 'rollback' sub_article.id %}" method="get">
+          <div class="mb-2">
+            <select class="form-select" aria-label="Default select example" name="rollback" id="rollback" onChange="fun()">
+              <option selected value="">Select from the options</option>
+              {% for rollback in rollbacks %}
+              <option name="rollback" value="{{rollback.id}}">{{rollback.updated_at}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-success" id="btn" disabled="true">Roll Back</button>
+          </div>
+        </form>
+        <p class="text-muted text-center">[If you want to keep a copy of this one also then click <b>Submit</b>, else click <b>Cancel</b> at the bottom of the page]</p>
+      </div>
+      <form action="" method="post" class="uniForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h6>{{form.sub_title|as_crispy_field}}</h6>
+        <h6>Content</h6>
+        {{form.media}}
+        {{form.content}}
+        <h6>Image</h6>
+        {{form.image}}
+        <h6>{{form.image_description|as_crispy_field}}</h6>
+        <div class="row my-1">
+          <div class="col-6">
+            <h6>{{form.external_link|as_crispy_field}}</h6>
+          </div>
+          <div class="col-6">
+            <h6>{{form.title_to_external_link|as_crispy_field}}</h6>
+          </div>
+        </div>
+        <h6>{{form.other_reference|as_crispy_field}}</h6>
+        <button role="button" type="submit" class="btn btn-primary my-2">Submit</button>
+        <a href="{% url 'article_detail' sub_article.sub_article.id sub_article.sub_article.slug %}" role="button" type="" class="btn btn-danger my-2">Cancel</a>
+      </form><hr>
+    </div> 
+  </div>
+
+  <script type="text/javascript">
+    function fun()
+      {
+          if(document.getElementById("rollback").value!="")
+              document.getElementById("btn").disabled=false;
+          else
+          document.getElementById("btn").disabled=true;
+
+      }
+  </script>
+  {% endblock %}
+</body>
+</html>

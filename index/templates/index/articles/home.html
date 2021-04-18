@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+
+<html lang="en">
+  <head>
+    {% block title %}
+    <title>{{home_title}}</title>
+    {% endblock %}
+  </head>
+  <body>
+{% block content %}   
+<main class="container">
+<div class="p-4 p-md-5 mb-4 text-white rounded bg-primary shadow-lg"><!-- Random Article card -->
+  <div class="col-md-10 offset-md-1">
+    <h1>Random Article</h1>
+    <h1 class="display-4 fst-italic">{{random_article.title}}</h1>
+    <p class="lead my-3">{{random_article.short_description|truncatechars:200}}</p>
+    <p class="lead mb-0"><a href="{% url 'article_detail' random_article.id random_article.slug %}" class="text-white fw-bold">Continue reading...</a></p>
+  </div>
+</div><!-- /.Random Article card -->
+<div class="row mb-2 justify-content-center">
+  {% for category in categories %}
+  <div class="col-md-4">
+    <div class="row g-0 border border-2 border-primary rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <h5><strong class="d-inline-block mb-2 text-primary"><a href="{% url 'category' category.id  category.category %}">{{category}}</a></strong></h5>
+        {% for article in category.mainarticle.all|slice:":3" %}
+        <h6 class="mb-0">{{forloop.counter}}- {{article.title}}</h6>
+        <small class="card-text mb-auto">{{article.short_description|truncatechars:75}}</small>
+        <small><a href="{% url 'article_detail' article.id article.slug %}" class="">Continue reading</a></small>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+</main><!-- /.container -->
+
+<footer class="blog-footer">
+</footer>
+
+
+{% endblock %}    
+  </body>
+</html>
