@@ -101,7 +101,6 @@ def article_detail(request, id, slug):
 	global categories
 	article=get_object_or_404(MainArticle, id=id)
 	sub_articles = SubArticle.objects.filter(sub_article=article)
-	print(article.category.mainarticle.all())
 	context={'article':article, 'sub_articles':sub_articles, 'article_detail_title':str(article.title[:50]),'categories':categories}
 	return render(request, 'index/articles/article_detail.html', context)
 
