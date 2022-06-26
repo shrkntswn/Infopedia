@@ -10,11 +10,20 @@
 {% block content %}   
 <main class="container">
 <div class="p-4 p-md-5 mb-4 text-white rounded bg-primary shadow-lg"><!-- Random Article card -->
-  <div class="col-md-10 offset-md-1">
-    <h1>Random Article</h1>
-    <h1 class="display-4 fst-italic">{{random_article.title}}</h1>
-    <p class="lead my-3">{{random_article.short_description|truncatechars:200}}</p>
-    <p class="lead mb-0"><a href="{% url 'article_detail' random_article.id random_article.slug %}" class="text-white fw-bold">Continue reading...</a></p>
+  <div class="row"> 
+    {% if random_article.subarticle_set.first.image %}
+    <div class="col-md-4">
+      <div class="card" style="width: 18rem; height:18rem">
+        <img class="card-img-top img-fluid" src="{{random_article.subarticle_set.first.image.url}}" alt="Card image cap" style="width: 18rem; height:18rem">
+      </div>
+    </div>
+    {% endif %} 
+    <div class="col-md-8">
+      <h1>Random Article</h1>
+      <h2 class="display-4 fst-italic">{{random_article.title}}</h2>
+      <p class="lead my-3">{{random_article.short_description|truncatechars:500}}</p>
+      <p class="lead mb-0"><a href="{% url 'article_detail' random_article.id random_article.slug %}" class="text-white fw-bold">Continue reading...</a></p>
+    </div>
   </div>
 </div><!-- /.Random Article card -->
 <div class="row mb-2 justify-content-center">

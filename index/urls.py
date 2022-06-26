@@ -13,4 +13,7 @@ urlpatterns = [
     path('<int:id>/<slug:slug>/', views.article_detail, name="article_detail"),
     path('add_category', views.add_category, name="add_category"),
     path('rollback/<int:id>', views.rollback, name="rollback"),
+    path('random_article',views.random_article, name="random_article"),
+    path('delete/<int:id>', views.article_delete, name="article_delete"),
+    path('sub_article_delete/<int:id>/<int:art_id>/<slug:slug>', views.sub_article_delete, name="sub_article_delete")
 ]

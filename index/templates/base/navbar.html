@@ -1,8 +1,9 @@
-<div class="container">
+
+<div class="container bg-light border-0">
   <header class="blog-header py-3">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-3 pt-1">
-        <a class="blog-header-logo text-dark" href="{% url 'home' %}">HOME</a>
+        <a class="blog-header-logo text-dark" href="{% url 'home' %}"><img src="base/static/globe.jpg"></a>
       </div>
     
       <div class="col-9 d-flex justify-content-end align-items-center">
@@ -18,38 +19,39 @@
       </div>
     </div>
   </header>
-
+<!--
   <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
       {% for category in categories %}
       <a class="p-2 link-secondary" href="{% url 'category' category.id category.category  %}">{{category}}</a>
-      {% endfor %}
-      
+      {% endfor %} 
     </nav>
   </div>
+-->
   {% if not search_title %}
  <ul class="nav nav-tabs mb-2">
   <li class="nav-item">
-    <a href="{% url 'home' %}" class="nav-link {% if home_title %}border-bottom-0 border-primary shadow active{% endif %}" aria-current="page">Home</a>
+    <a href="{% url 'home' %}" class="nav-link {% if home_title %}border-0  active{% endif %}" aria-current="page">Home</a>
   </li>
   <li class="nav-item">
-    <a href="{% url 'main_article_create' %}"class="nav-link {% if main_article_create_title %}border-bottom-0 border-primary shadow active{% endif %}">Create</a>
+    <a href="{% url 'main_article_create' %}"class="nav-link {% if main_article_create_title %}border-0  active{% endif %}">Create</a>
   </li>
   {% if sub_article_create_title %}
   <li class="nav-item">
-    <a href="{% url 'sub_article_create' main_article.id %}"class="nav-link {% if sub_article_create_title %}border-bottom-0 border-primary shadow active{% endif %}">Add Details</a>
+    <a href="{% url 'sub_article_create' main_article.id %}"class="nav-link {% if sub_article_create_title %}border-0  active{% endif %}">Add Details</a>
   </li>
   {% endif %}
   {% if sub_article_update_title %}
   <li class="nav-item">
-    <a class="nav-link {% if sub_article_update_title %}border-bottom-0 border-primary shadow active{% endif %}">{{sub_article_update_title}}</a>
+    <a class="nav-link {% if sub_article_update_title %}border-0  active{% endif %}">{{sub_article_update_title}}</a>
   </li>
   {% endif %}
   {% if article_detail_title %}
   <li class="nav-item">
-    <a href="#"class="nav-link {% if article_detail_title %}border-bottom-0 border-primary shadow active{% endif %}">{{article.title}}</a>
+    <a href="#"class="nav-link {% if article_detail_title %}border-0  active{% endif %}">{{article.title}}</a>
   </li>
   {% endif %}
   </ul>
   {% endif %}
 </div>
+

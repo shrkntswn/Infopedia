@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 import random
 from django.core.paginator import Paginator, EmptyPage
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 import json
 #from datetime import timedelta
 #from django.utils.timezone import timezone
@@ -14,6 +14,7 @@ import json
 
 from django.db.models import CharField
 from django.db.models.functions import Length
+from django.urls import reverse
 
 CharField.register_lookup(Length)
 
@@ -88,12 +89,19 @@ def home(request):
 	context={'articles':articles, 'home_title':"Home",'categories':categories, 'random_article':random_article}
 	return render(request, 'index/articles/home.html', context)
 
+### RANDOM ARTICLE
+def random_article(request):
+	articles = MainArticle.objects.all().order_by('-published_at')
+	random_article = random.choice(articles)
+	return redirect('article_detail', random_article.id, random_article.slug)
+
 
 ### ARTICLE DETAIL PAGE
 def article_detail(request, id, slug):
 	global categories
 	article=get_object_or_404(MainArticle, id=id)
 	sub_articles = SubArticle.objects.filter(sub_article=article)
+	print(article.category.mainarticle.all())
 	context={'article':article, 'sub_articles':sub_articles, 'article_detail_title':str(article.title[:50]),'categories':categories}
 	return render(request, 'index/articles/article_detail.html', context)
 
@@ -182,7 +190,7 @@ def sub_article_update(request, id):
 	context={'form':form,'sub_article_update_title':"Edit-"+str(sub_article.sub_title[:50]),'categories':categories, "sub_article":sub_article, 'rollbacks':rollbacks}
 	return render(request, 'index/articles/sub_article_update.html', context)
 
-
+### SAVE SUB ARTICLE HISTORY
 def sub_article_history_save(instance):
 	sub_article_history = SubArticleRollBack.objects.create(
 		history_of = instance,
@@ -197,7 +205,7 @@ def sub_article_history_save(instance):
 		)
 	return sub_article_history
 
-
+### SAVE ROLLBACK
 def rollback(request, id):
 	sub_article=get_object_or_404(SubArticle, id=id)
 	rollback_id = request.GET.get('rollback') 
@@ -220,10 +228,19 @@ def rollback(request, id):
 	return redirect('sub_article_update', id)
 
 
-
+## DELETE MAIN ARTICLE
 def article_delete(request, id):
-	article = get_object_or_404(Articles, id=id)
-	artticle.delete()
+	article = get_object_or_404(MainArticle, id=id)
+	article.delete()
 	context={}
-	return render(request, '', context)
+	return redirect('main_article_create')
+
+## DELETE SUB ARTICLE
+def sub_article_delete(request, id, art_id, slug):
+	subarticle = get_object_or_404(SubArticle, id=id)
+	subarticle.delete()
+	context={}
+	return redirect('article_detail', art_id, slug)
+	
+	#return HttpResponseRedirect(reverse('article_detail'))
 
