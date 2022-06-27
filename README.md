@@ -8,3 +8,4 @@
 <img src="Screenshots/article-update.png">
 <img src="Screenshots/article-update2.png">
 <img src="Screenshots/article-create.png">
+<img src="Screenshots/Whitetiger.png">
