@@ -86,6 +86,7 @@ def home(request):
 	global categories 
 	articles = MainArticle.objects.all().order_by('-published_at')
 	random_article = random.choice(articles)
+	#rand_art_image=next(fimg for fimg in random_article.image if fimg is not None)
 	context={'articles':articles, 'home_title':"Home",'categories':categories, 'random_article':random_article}
 	return render(request, 'index/articles/home.html', context)
 
