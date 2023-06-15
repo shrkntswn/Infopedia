@@ -33,9 +33,10 @@
       <div class="col p-4 d-flex flex-column position-static">
         <h5><strong class="d-inline-block mb-2 text-primary"><a href="{% url 'category' category.id  category.category %}">{{category}}</a></strong></h5>
         {% for article in category.mainarticle.all|slice:":3" %}
-        <h6 class="mb-0">{{forloop.counter}}- {{article.title}}</h6>
-        <small class="card-text mb-auto">{{article.short_description|truncatechars:75}}</small>
-        <small><a href="{% url 'article_detail' article.id article.slug %}" class="">Continue reading</a></small>
+        <a href="{% url 'article_detail' article.id article.slug %}" class="">
+          <h6 class="mb-0"><li> {{article.title}}</li></h6>
+        </a>
+        <small class="card-text mb-auto">{{article.short_description|truncatechars:100}}...</small>
         {% endfor %}
       </div>
     </div>
