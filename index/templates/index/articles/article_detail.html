@@ -11,9 +11,10 @@
 
 <main class="container border-0">
   <div class="row">
-    <div class="col-md-2">
-      <h5>Contents</h5>
-      <div class="card bg-light p-2">
+    <div class="col-md-3">
+      
+      <div class="card bg-light mt-2 p-2">
+        <h5 class="p-2">Contents</h5>
         <ul>
           {% for subarticle in sub_articles %}
             <li><small>{{subarticle.sub_title}}</small></li>
@@ -22,9 +23,10 @@
       </div><br>
       <a href="{% url 'random_article' %}"><h6>Random article</h6></a>
       <a href=""><h6>Recently added</h6></a><br>
-      <h5>Related articles</h5>
+      
       <div class=" mb-2">
         <div class="card bg-light p-2">
+          <h5 class="p-2">Related articles</h5>
           <ul>
             {% for art in article.category.mainarticle.all %}
             <li>
@@ -35,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-9">
       <div class="border-0 mb-2">
         <h1 class="fst-italic">
           {{article.title}}
@@ -94,9 +96,10 @@
           {% endif %}
           <div class="{% if subarticle.image %}col-md-9{% else %}col{% endif %}">
             <div class="card-body mb-0">
-              <h4 class="card-title border-bottom border-dark mb-2">{{subarticle.sub_title}}</h4> 
+              <div class="card-title border-bottom border-dark mb-0"><h4>{{subarticle.sub_title}}</h4> 
                 <a href="{% url 'sub_article_update' subarticle.id %}" style="text-decoration: none;"><small><small>[Edit]</small></small></a>
                 <a href="{% url 'sub_article_delete' subarticle.id article.id article.slug %}" style="text-decoration: none;"><small><small>[Delete]</small></small></a>
+              </div>
               <p class="card-text">{{ subarticle.content|safe }}</p>
             </div>
           </div>

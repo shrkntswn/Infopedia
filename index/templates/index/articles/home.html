@@ -9,34 +9,37 @@
   <body>
 {% block content %}   
 <main class="container">
-<div class="p-4  mb-4 text-white rounded bg-primary shadow-lg"><!-- Random Article card -->
+<div class="p-2 mb-4 text-black rounded bg-light border border-2 border-light shadow-lg"><!-- Random Article card -->
   <div class="row"> 
     {% if random_article.subarticle_set.first.image %}
-    <div class="col-md-3">
+    <div class="col-md-2">
       <div class="card" style="max-width: 18rem; max-height:18rem; width:12rem; height:12rem">
         <img class="card-img-top img-fluid" src="{{random_article.subarticle_set.first.image.url}}" alt="Card image cap" style="max-width: 18rem; max-height:18rem; width:12rem; height:12rem">
       </div>
     </div>
     {% endif %} 
-    <div class="col-md-9">
-      <h2>Random Article</h2>
-      <h2 class="fst-italic">{{random_article.title}}</h2>
-      <p class="my-2">{{random_article.short_description|truncatechars:500}}</p>
-      <a  href="{% url 'article_detail' random_article.id random_article.slug %}" class="mb-0 text-white fw-bold">Continue reading...</a>
+    <div class="col-md-10">
+      <h3>Random Article</h3>
+      <h3 class="fst-italic">{{random_article.title}}</h3>
+      <p class="my-1">{{random_article.short_description|truncatechars:500}}</p>
+      <a  href="{% url 'article_detail' random_article.id random_article.slug %}" class="mb-0 text-black fw-bold" style='text-decoration:none'>(Continue reading...)</a>
     </div>
   </div>
 </div><!-- /.Random Article card -->
 <div class="row mb-2 justify-content-center">
   {% for category in categories %}
-  <div class="col-md-4">
-    <div class="row g-0 border border-2 bg-light border-primary rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
-      <div class="col p-4 d-flex flex-column position-static">
+  <div class="col-md-6">
+    <div class="row g-0 border border-2 bg-light border-light rounded overflow-hidden flex-md-row mb-4 shadow-success shadow-lg h-md-250 position-relative">
+      <div class="col p-2 d-flex flex-column position-static">
         <h5><strong class="d-inline-block mb-2 text-primary"><a href="{% url 'category' category.id  category.category %}">{{category}}</a></strong></h5>
         {% for article in category.mainarticle.all|slice:":3" %}
-        <a href="{% url 'article_detail' article.id article.slug %}" class="">
-          <h6 class="mb-0"><li> {{article.title}}</li></h6>
-        </a>
-        <small class="card-text mb-auto">{{article.short_description|truncatechars:100}}...</small>
+        <small class="mb-0 card-text mb-auto">
+          <li><b>{{article.title}}</b>-{{article.short_description|truncatechars:150}}
+            <a href="{% url 'article_detail' article.id article.slug %}" class="" style='text-decoration:none'>
+              (Full article)
+            </a>
+          </li></small>
+        
         {% endfor %}
       </div>
     </div>

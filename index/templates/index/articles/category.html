@@ -13,12 +13,23 @@
   <div class="row mb-2">
     {% for article in articles %}
     <div class="col-md-6">
-      <div class="row g-0 border border-2 border-primary rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <h2 class="mb-0">{{article.title}}</h2>
-          <div class="mb-1 text-muted">{{article.published_at.date}}</div>
+      <div class="row g-0 border border-2 border-light rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+        <div class="col p-3 d-flex flex-column position-static">
+          <div class="card mb-0" style="max-width: 600px;">
+            <div class="row g-0">
+              <div class="col-md-2">
+                <img src="{{article.subarticle_set.first.image.url}}" class="img-fluid rounded-start" style="max-height:100px, max-width:100px, width:100px; height:100px" alt="...">
+              </div>
+              <div class="col-md-10">
+                <div class="card-body">
+                  <h5 class="card-title">{{article.title}}</h5>
+                  <p class="card-text"><small class="text-body-secondary">{{article.published_at.date}}</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
           <p class="card-text mb-auto">{{article.short_description}}</p>
-          <a href="{% url 'article_detail' article.id article.slug %}" class="stretched-link">Continue reading</a>
+          <a href="{% url 'article_detail' article.id article.slug %}" class="stretched-link"></a>
         </div>
         <div class="col-auto d-none d-lg-block">
 
