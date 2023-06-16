@@ -5,7 +5,7 @@
 <img src="Screenshots/categories.png">
 <img src="Screenshots/search1.png">
 <img src="Screenshots/search.png">
-<img src="">
+<img src="Screenshots/article.png">
 <img src="Screenshots/article-update.png">
 <img src="Screenshots/article-update2.png">
 <img src="Screenshots/article-create.png">
