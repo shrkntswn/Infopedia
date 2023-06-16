@@ -29,7 +29,7 @@
 <div class="row mb-2 justify-content-center">
   {% for category in categories %}
   <div class="col-md-4">
-    <div class="row g-0 border border-2 border-primary rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+    <div class="row g-0 border border-2 bg-light border-primary rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
       <div class="col p-4 d-flex flex-column position-static">
         <h5><strong class="d-inline-block mb-2 text-primary"><a href="{% url 'category' category.id  category.category %}">{{category}}</a></strong></h5>
         {% for article in category.mainarticle.all|slice:":3" %}
